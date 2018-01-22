@@ -11,7 +11,7 @@ class PrintNineNine {
   final def printNineNine(x:Int = 1,y:Int = 1) : Unit = {
     if (x<=9 || y<=9) {
       if (x<=9){
-        print((x+y) + " ")
+        print((x*y) + " ")
         printNineNine(x+1,y)
       }else{
         println()
