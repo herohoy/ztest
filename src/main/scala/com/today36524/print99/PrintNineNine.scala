@@ -8,14 +8,14 @@ import scala.annotation.tailrec
 class PrintNineNine {
 
   @tailrec
-  final def printNineNine(x:Int = 1,y:Int = 1) : Unit = {
-    if (x<=9 || y<=9) {
-      if (x<=9){
+  final def printNineNine(x:Int = 1,y:Int = 1,xe:Int = 9,ye:Int = 9) : Unit = {
+    if (x<=xe || y<=ye) {
+      if (x<=xe){
         print((x*y) + " ")
-        printNineNine(x+1,y)
+        printNineNine(x+1,y,xe,ye)
       }else{
         println()
-        printNineNine(y+1,y+1)
+        printNineNine(y+1,y+1,xe,ye)
       }
     }
   }

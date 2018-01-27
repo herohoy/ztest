@@ -7,10 +7,11 @@ object Main {
   def main(args: Array[String]): Unit = {
     val nn = new PrintNineNine
     nn.printNineNine()
+    nn.printNineNine(x=1,y=1,xe=32,ye=32)
 
     println()
 
     val fb = new Fibonacci
-    fb.fibonacci(50)
+    fb.fibonacci(70)
   }
 }
