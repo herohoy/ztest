@@ -3,7 +3,7 @@ package com.today36524.fibonacci
 import scala.annotation.tailrec
 
 /**
-  * 斐波那契数
+  * 斐波那契数 (古典兔子：1,1,2,3,5,8,13,21...)
   */
 class Fibonacci {
 

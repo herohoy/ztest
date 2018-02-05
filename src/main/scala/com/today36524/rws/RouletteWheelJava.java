@@ -1,5 +1,8 @@
 package com.today36524.rws;
 
+/**
+ * 轮盘赌算法/比例选择
+ */
 public class RouletteWheelJava {
     public void rouletteTest() {
         double[] P={0.2,0.3,0.5};//假设的概率分布
