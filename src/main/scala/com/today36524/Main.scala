@@ -1,6 +1,7 @@
 package com.today36524
 
 import com.today36524.fibonacci.Fibonacci
+import com.today36524.narcissusnum.NarcissusNumber
 import com.today36524.primenum.PrimenumOrNot
 import com.today36524.print99.PrintNineNine
 import com.today36524.rws._
@@ -27,10 +28,21 @@ object Main {
 //    val rs2 = List().reduceLeft(_+","+_)  // todo 空list不适用
     println(rs)*/
 
+    println()
+
     val nu = new PrimenumOrNot
     /*for(i <- 101 to 200){
       println(i+" is noun? "+nu.isPrimeNum(i))
     }*/
     nu.showPrimeNums(101,200)
+
+    println()
+
+//    val n = 123;
+//    println(n/100)
+//    println(n%100/10)
+//    println(n%10)
+    val narc = new NarcissusNumber
+    narc.showAllNarcissusNum()
   }
 }
