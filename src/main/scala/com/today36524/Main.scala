@@ -1,5 +1,6 @@
 package com.today36524
 
+import com.today36524.divide2prime.Divide2Prime
 import com.today36524.fibonacci.Fibonacci
 import com.today36524.narcissusnum.NarcissusNumber
 import com.today36524.primenum.PrimenumOrNot
@@ -10,7 +11,7 @@ object Main {
   def main(args: Array[String]): Unit = {
     val nn = new PrintNineNine
     nn.printNineNine()
-    nn.printNineNine(x=1,y=1,xe=32,ye=32)
+    nn.printNineNine(x=3,y=3,xe=32,ye=32)
 
     println()
 
@@ -34,7 +35,7 @@ object Main {
     /*for(i <- 101 to 200){
       println(i+" is noun? "+nu.isPrimeNum(i))
     }*/
-    nu.showPrimeNums(101,200)
+    nu.showPrimeNums(200,300)
 
     println()
 
@@ -44,5 +45,11 @@ object Main {
 //    println(n%10)
     val narc = new NarcissusNumber
     narc.showAllNarcissusNum()
+
+
+    println()
+
+    val dv = new Divide2Prime
+    dv.showDivide(Option(299))
   }
 }

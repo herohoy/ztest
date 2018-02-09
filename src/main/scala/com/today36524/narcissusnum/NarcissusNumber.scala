@@ -4,7 +4,7 @@ package com.today36524.narcissusnum
   * 水仙花数
   */
 class NarcissusNumber {
-  def isNarcissusOrNot(n:Int) = {
+  def isNarcissusOrNot(n:Int): Boolean = {
     if(n<100 || n>999){
       false
     }else{
@@ -12,7 +12,7 @@ class NarcissusNumber {
     }
   }
 
-  def showAllNarcissusNum(begin:Int = 100,end:Int = 999) = {
+  def showAllNarcissusNum(begin:Int = 100,end:Int = 999): Unit = {
     val res:StringBuilder = new StringBuilder
     for(i <- begin to end){
       if(isNarcissusOrNot(i)){

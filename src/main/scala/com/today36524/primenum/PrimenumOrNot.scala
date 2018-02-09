@@ -17,7 +17,7 @@ class PrimenumOrNot {
     }
   }
 
-  def showPrimeNums(a:Int = 0,b:Int = 100) = {
+  def showPrimeNums(a:Int = 0,b:Int = 100): Unit = {
     val begin = if(a<=b) a else b
     val end = if(a>b) a else b
     val res:StringBuilder = new StringBuilder
