@@ -1,5 +1,6 @@
 package com.herohoy;
 
+import com.herohoy.fibonacci.Fibonacci;
 import com.herohoy.tailrec.FactorialTailRecursion;
 import com.today36524.print99.PrintNineNine;
 
@@ -19,5 +20,7 @@ public class Main {
         // StackOverflowError
 //        FactorialTailRecursion.factorialTailRecursionNonInterface(1,100000);
         System.out.println(FactorialTailRecursion.factorialTailRecursion(1L,10000000L).invoke());
+
+        System.out.println(Fibonacci.fibonacci(70));
     }
 }
