@@ -17,7 +17,7 @@ class Trap {
    * @return
    * @author lihui
    */
-  def trap(nums:Vector[Int]) = {
+  def trap(nums:Vector[Int]): Int = {
     (for(i <- 0 until nums.size) yield { (i,nums(i)) })
       .groupBy(_._2).keySet.toList.sortWith(_ < _).map(a => {
       val nonZeros = (for(i <- 0 until nums.size if nums(i) > a) yield { i })
