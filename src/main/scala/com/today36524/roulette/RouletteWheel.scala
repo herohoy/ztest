@@ -1,4 +1,4 @@
-package com.today36524.rws
+package com.today36524.roulette
 
 /**
   * 轮盘赌算法/比例选择

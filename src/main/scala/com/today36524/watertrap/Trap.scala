@@ -1,8 +1,5 @@
 package com.today36524.watertrap
 
-import scala.annotation.tailrec
-import scala.collection.mutable.ListBuffer
-
 /**
   * 平面坐标(x轴y轴组成的二维坐标)方块储水问题计算
   *
@@ -25,43 +22,3 @@ class Trap {
     }).sum
   }
 }
-
-/*
-
-case class TreeNode(id:Long,parent:Option[TreeNode] = None,childNodes:List[TreeNode] = List[TreeNode]())
-
-class TreeNodeUtil{
-  //当前节点查询 (假设父节点默认查出)
-  def getNode(id:Long): TreeNode = {
-    TreeNode(id = id)
-  }
-  //单层子节点查询
-  def getChildNodes(id:Long): List[TreeNode] = {
-    getNode(id).childNodes
-  }
-
-  @tailrec
-  private def getChildNodesTailrec(node: TreeNode):List[TreeNode] = {
-    if(node.childNodes.isEmpty){
-      node.childNodes
-    }else{
-      node.childNodes.map(nd => {
-        getChildNodesTailrec(nd)
-      })
-    }
-  }
-
-
-}
-*/
-
-/*
-
-object Trap{
-  def main(args: Array[String]): Unit = {
-    val t = new Trap
-    println(t.trap(Vector(0,1,0,2,1,3,1,0,1,2,0,1)))
-//    println(t.trap(Vector(0,0)))
-  }
-}
-*/

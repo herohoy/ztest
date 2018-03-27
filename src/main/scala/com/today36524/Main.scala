@@ -1,5 +1,6 @@
 package com.today36524
 
+import com.herohoy.algorithms.roulette.RouletteWheelJava
 import com.today36524.divide2prime.Divide2Prime
 import com.today36524.fibonacci.Fibonacci
 import com.today36524.gcdlcm.GcdLcm
@@ -10,7 +11,6 @@ import com.today36524.watertrap.Trap
 //import com.today36524.other.User
 import com.today36524.primenum.PrimenumOrNot
 import com.today36524.print99.PrintNineNine
-import com.today36524.rws._
 
 object Main {
   def main(args: Array[String]): Unit = {
