@@ -1,4 +1,4 @@
-package com.herohoy.tailrec;
+package com.herohoy.utils.tailrec;
 
 import java.util.stream.Stream;
 

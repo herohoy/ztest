@@ -1,7 +1,7 @@
-package com.herohoy.fibonacci;
+package com.herohoy.algorithms.fibonacci;
 
-import com.herohoy.tailrec.TailInvoke;
-import com.herohoy.tailrec.TailRecursion;
+import com.herohoy.utils.tailrec.TailInvoke;
+import com.herohoy.utils.tailrec.TailRecursion;
 
 /**
  * @author lihui  2018/3/26 下午5:46

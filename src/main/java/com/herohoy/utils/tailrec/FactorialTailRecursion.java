@@ -1,6 +1,6 @@
-package com.herohoy.tailrec;
+package com.herohoy.utils.tailrec;
 
-/**
+/** 测试代码（阶乘计算）
  * @author lihui  2018/3/22 下午5:17
  **/
 public class FactorialTailRecursion {

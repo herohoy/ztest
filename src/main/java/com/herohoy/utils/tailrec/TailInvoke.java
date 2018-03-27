@@ -1,4 +1,4 @@
-package com.herohoy.tailrec;
+package com.herohoy.utils.tailrec;
 /**
  * 使用尾递归的类,目的是对外统一方法
  *
