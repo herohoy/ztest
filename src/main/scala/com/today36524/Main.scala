@@ -5,6 +5,7 @@ import com.today36524.divide2prime.Divide2Prime
 import com.today36524.fibonacci.Fibonacci
 import com.today36524.gcdlcm.GcdLcm
 import com.today36524.narcissusnum.NarcissusNumber
+import com.today36524.treeloop.TreeLoop
 import com.today36524.watertrap.Trap
 
 //import scala.collection.mutable.ListBuffer
@@ -125,6 +126,26 @@ object Main {
     //坐标方块储水
     val t = new Trap
     println(t.trap(Vector(0,1,0,2,1,3,1,0,1,2,0,1)))
+
+    println()
+/*
+    // 尝试s字符串编写sql语句
+    val id:Int = 1
+    val sql: String =
+      s"""
+         select * from tab
+         where id = ${id}
+       """
+    println(sql)
+    */
+
+    //显示treeNode以及测试递归
+    val tree:TreeLoop = new TreeLoop
+    println(tree.getNode(1))
+    println(tree.getNodeWithSingleParent(10))
+    println(tree.getChildNodes(1))
+    println(tree.getNodeWithParents(40))
+
   }
 
 

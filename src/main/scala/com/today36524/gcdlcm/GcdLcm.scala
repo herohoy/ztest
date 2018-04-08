@@ -18,8 +18,8 @@ class GcdLcm {
     (for(i <- 1 to (if(a>b) a else b) if a*i%b==0) yield { a*i }).head
   }
 
-  def showGcdAndLcm(a:Int = 6,b:Int = 4) = {
-    println(s"the Greatest Common Divisor of ${a} and ${b} is:"+greatestCommonDivisor(a,b))
+  def showGcdAndLcm(a:Int = 6,b:Int = 4): Unit = {
+    println(s"""the Greatest Common Divisor of $a and $b is:"""+greatestCommonDivisor(a,b))
     println("the Least Common Multiple of "+a+" and "+b+" is:"+leastCommonMultiple(a,b))
   }
 }
