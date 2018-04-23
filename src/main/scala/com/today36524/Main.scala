@@ -145,6 +145,10 @@ object Main {
     println(tree.getNodeWithSingleParent(10))
     println(tree.getChildNodes(1))
     println(tree.getNodeWithParents(40))
+    val res = tree.getNodeJavaWithParents(40)
+    println(res)
+
+
 
   }
 
