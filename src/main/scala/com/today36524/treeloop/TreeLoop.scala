@@ -1,12 +1,9 @@
 package com.today36524.treeloop
 
-import java.sql.DriverManager
+import java.sql.{Connection, DriverManager}
 import java.util.Optional
 
-import com.sun.org.apache.xerces.internal.dom.ParentNode
-
 import scala.annotation.tailrec
-import scala.collection.JavaConverters
 import scala.collection.mutable.ListBuffer
 //import com.mysql.jdbc.Driver
 
@@ -18,7 +15,8 @@ import scala.collection.mutable.ListBuffer
 class TreeLoop {
   Class.forName("com.mysql.jdbc.Driver")
 
-  val conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/tree?useUnicode=true&characterEncoding=utf8",
+  val conn: Connection =
+    DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/tree?useUnicode=true&characterEncoding=utf8",
     "root","today-36524")
 
   /**
@@ -43,7 +41,7 @@ class TreeLoop {
 
   /**
     * 单层父节点查询
-    * @param id
+    * @param id unique
     * @return
     */
   def getNodeWithSingleParent(id:Long): Option[TreeNode] = {
@@ -70,8 +68,8 @@ class TreeLoop {
 
   /**
     * 获取节点，并按层级获取所有父节点（尾递归暂不适用）
-    * @param node
-    * @param parentNode
+    * @param node current
+    * @param parentNode parent
     * @return
     */
   //  @tailrec
@@ -130,7 +128,7 @@ class TreeLoop {
 
   /**
     * 单层子节点查询
-    * @param id
+    * @param id unique
     * @return
     */
   def getChildNodes(id:Long): List[TreeNode] = {
