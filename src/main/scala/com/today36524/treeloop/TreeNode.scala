@@ -6,6 +6,7 @@ package com.today36524.treeloop
   **/
 case class TreeNode(
                      id:Long,
+                     name:Option[String] = None,
                      parent:Option[TreeNode] = None,
                      childNodes:List[TreeNode] = List[TreeNode]()
                    )

@@ -1,9 +1,13 @@
 package com.today36524.treeloop
 
 import java.sql.{Connection, DriverManager}
+import java.util.ArrayList
 import java.util.Optional
 
+import com.herohoy.tools.treeloop.TreeNodeJava
+
 import scala.annotation.tailrec
+import scala.collection.JavaConverters
 import scala.collection.mutable.ListBuffer
 //import com.mysql.jdbc.Driver
 
@@ -34,7 +38,7 @@ class TreeLoop {
     rs.last
 //    println(rs.getRow)
     if(rs.getRow == 1)
-      Option(TreeNode(id = rs.getLong("id")))
+      Option(TreeNode(id = rs.getLong("id"),name = Option (rs.getString("name"))))
     else
       None
   }
@@ -53,11 +57,13 @@ class TreeLoop {
     val rs = pst.executeQuery()
     rs.last
     if(rs.getRow == 1)
-      Option(TreeNode(id = rs.getLong("id"),parent = getNode(rs.getLong("parent_id"))))
+      Option(TreeNode(id = rs.getLong("id"),name = Option( rs.getString("name")),
+        parent = getNode(rs.getLong("parent_id"))))
     else
       None
   }
 
+  @deprecated
   def getNodeWithParents(id:Long): Option[TreeNode] = {
     val node = getNodeWithSingleParent(id)
     if(node.isEmpty)
@@ -67,20 +73,21 @@ class TreeLoop {
   }
 
   /**
-    * 获取节点，并按层级获取所有父节点（尾递归暂不适用）
+    * 递归获取节点，并按层级获取所有父节点（尾递归暂不适用）
     * @param node current
     * @param parentNode parent
     * @return
     */
+  @deprecated
   //  @tailrec
-  def getParentsRec(node:Option[TreeNode],parentNode: Option[TreeNode] = None):Option[TreeNode] = {
+  private def getParentsRec(node:Option[TreeNode],parentNode: Option[TreeNode] = None):Option[TreeNode] = {
     if(node.isEmpty)
       node
     else if(parentNode.isEmpty)
       getNode(node.get.id)
     else {
       val thisnode = getNodeWithSingleParent(node.get.id)
-      Option(TreeNode(id = thisnode.get.id,
+      Option(TreeNode(id = thisnode.get.id,name = thisnode.get.name,
         parent = getParentsRec(node = thisnode.get.parent,parentNode = getNode(parentNode.get.id))))
     }
   }
@@ -98,9 +105,11 @@ class TreeLoop {
       val parentNode = getNodeWithSingleParent(node.get().getParent.get().getId)
       var parentNodeJava = new TreeNodeJava
       parentNodeJava.setId(parentNode.get.id)
+      parentNodeJava.setName(Optional.of(parentNode.get.name.get))
       if(parentNode.get.parent.nonEmpty){
         var njParent = new TreeNodeJava
         njParent.setId(parentNode.get.parent.get.id)
+        njParent.setName(Optional.of(parentNode.get.parent.get.name.get))
         parentNodeJava.setParent(Optional.of(njParent))
       }
       node.get.setParent(Optional.of(parentNodeJava))
@@ -114,9 +123,11 @@ class TreeLoop {
     if(node.nonEmpty){
       var nodeJava = new TreeNodeJava
       nodeJava.setId(node.get.id)
+      nodeJava.setName(Optional.of(node.get.name.get))
       if(node.get.parent.nonEmpty){
         var njParent = new TreeNodeJava
         njParent.setId(node.get.parent.get.id)
+        njParent.setName(Optional.of(node.get.parent.get.name.get))
         nodeJava.setParent(Optional.of(njParent))
       }
       currentNode = Optional.of(nodeJava)
@@ -140,7 +151,8 @@ class TreeLoop {
     val rs = pst.executeQuery()
     val childs:ListBuffer[TreeNode] = ListBuffer[TreeNode]()
     while (rs.next()){
-      childs append TreeNode(id = rs.getLong("id"))
+      childs append TreeNode(id = rs.getLong("id"),name = Option( rs.getString("name")),
+        parent = Option(TreeNode(id = id)))
     }
     childs.toList
   }
@@ -150,8 +162,112 @@ class TreeLoop {
     * @return
     * @author lihui
     */
-  def getNodeWithSingleChilds(id:Long): TreeNode = {
-    TreeNode(id = id,childNodes = getChildNodes(id))
+  def getNodeWithSingleChilds(id:Long): Option[TreeNode] = {
+    val node = getNode(id = id)
+    if(node.isEmpty)
+      None
+    else
+      Option(TreeNode(id = node.get.id,name = node.get.name,childNodes = getChildNodes(node.get.id)))
+  }
+
+  /**
+    * 单层父子遍历
+    * @param id
+    * @return
+    */
+  def getNodeWithParentAndChilds(id:Long):Option[TreeNode] = {
+    val node = getNodeWithSingleParent(id = id)
+    if(node.isEmpty)
+      None
+    else
+      Option(TreeNode(id = id,name = node.get.name,parent = node.get.parent,
+        childNodes = getChildNodes(id)))
+  }
+
+
+  private var childIndex:Int = 0
+
+  @tailrec
+  private def getChildsTailrec(node:Optional[TreeNodeJava],index:Int):Optional[TreeNodeJava] = {
+    if(!node.isPresent){
+      childIndex = 0
+      currentNode
+    }
+    //当到达叶子节点之后的操作（后续应继续下一个同级节点的查询和判断） （暂时有问题需要修改）
+    else if(node.get.getChildNodes.isEmpty &&
+      (node.get().getParent.isPresent
+//        || (index>0 && index<node.get().getChildNodes.size())
+      )
+    ) {
+      childIndex += 1
+//      val nodeWithChilds = getNodeWithParentAndChilds(node.get().getParent.get().getId)
+      getChildsTailrec(Optional.of(
+        new TreeNodeJava(node.get.getParent.get.getId,node.get.getParent.get.getName,
+          node.get.getParent.get.getParent
+//          ,node.get.getParent.get.getChildNodes //放开子节点的填入，则会进入无限循环
+        )),childIndex)
+    } else if(index < node.get.getChildNodes.size){
+      val nodeWithChilds = getNodeWithParentAndChilds(node.get().getChildNodes.get(index).getId)
+      var childNodeJava = new TreeNodeJava(nodeWithChilds.get.id,nodeWithChilds.get.name.get,
+        new TreeNodeJava(nodeWithChilds.get.parent.get.id,nodeWithChilds.get.parent.get.name.get,
+          {
+            var tmList:ArrayList[TreeNodeJava] = new ArrayList[TreeNodeJava]
+            getChildNodes(nodeWithChilds.get.parent.get.id).foreach(tmp =>
+              tmList.add(new TreeNodeJava(tmp.id,tmp.name.get)))
+            tmList
+          }))
+      if(nodeWithChilds.get.childNodes.nonEmpty){
+        var temp2:TreeNodeJava = new TreeNodeJava
+        var tmpList:ArrayList[TreeNodeJava] = new ArrayList[TreeNodeJava]()
+        nodeWithChilds.get.childNodes.map(temp => {
+          temp2 = new TreeNodeJava(temp.id,temp.name.get)
+          temp2.setParent(Optional.of(new TreeNodeJava(nodeWithChilds.get.id,nodeWithChilds.get.name.get)))
+          tmpList.add(temp2)
+        })
+        childNodeJava.setChildNodes(tmpList)
+      }
+      node.get.getChildNodes.set(index,childNodeJava)
+      getChildsTailrec(Optional.of(childNodeJava),
+          {
+            childIndex = 0
+            childIndex
+          }
+      )
+    } else {
+      childIndex = 0
+      currentNode
+    }
+  }
+
+  def getNodeJavaWithAllChilds(id:Long):Optional[TreeNodeJava] ={
+    currentNode = Optional.empty()
+    childIndex = 0
+    val node = getNodeWithSingleChilds(id)
+    if(node.nonEmpty){
+      var nodeJava = new TreeNodeJava(node.get.id,node.get.name.get)
+//      nodeJava.setParent(Optional.of(new TreeNodeJava(node.get.id)))
+      if(node.get.childNodes.nonEmpty){
+        var temp2:TreeNodeJava = new TreeNodeJava
+//        nodeJava.setChildNodes(
+//          JavaConverters.seqAsJavaList(
+//            node.get.childNodes.map(temp => {
+//              temp2 = new TreeNodeJava(temp.id,temp.name.get)
+//              temp2
+//            })
+//          )
+//        )
+        var tmpList:ArrayList[TreeNodeJava] = new ArrayList[TreeNodeJava]()
+        node.get.childNodes.map(temp => {
+          temp2 = new TreeNodeJava(temp.id,temp.name.get)
+          temp2.setParent(Optional.of(new TreeNodeJava(id,node.get.name.get)))
+          tmpList.add(temp2)
+        })
+        nodeJava.setChildNodes(tmpList)
+
+      }
+      currentNode = Optional.of(nodeJava)
+    }
+    getChildsTailrec(currentNode,childIndex)
   }
 
 }

@@ -145,10 +145,16 @@ object Main {
     println(tree.getNodeWithSingleParent(10))
     println(tree.getChildNodes(1))
     println(tree.getNodeWithParents(40))
+
     val res = tree.getNodeJavaWithParents(40)
     println(res)
 
+    println(tree.getNodeWithSingleChilds(1))
+    println(tree.getNodeWithSingleChilds(40))
 
+    val resc = tree.getNodeJavaWithAllChilds(1)
+    val resf = tree.getNodeJavaWithAllChilds(3)
+    println(resc)
 
   }
 
