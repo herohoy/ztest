@@ -2,8 +2,12 @@ package com.herohoy;
 
 import com.herohoy.algorithms.factorial.Factorial;
 import com.herohoy.algorithms.fibonacci.Fibonacci;
+import com.herohoy.tools.treeloop.TreeLoopJava;
+import com.herohoy.tools.treeloop.TreeNodeJava;
 import com.herohoy.utils.tailrec.FactorialTailRecursion;
 import com.today36524.print99.PrintNineNine;
+
+import java.util.List;
 
 /**
  * @author lihui  2018/3/22 下午5:35
@@ -30,5 +34,11 @@ public class Main {
 
         System.out.println(Fibonacci.fibonacci(70));
         System.out.println();
+
+        TreeLoopJava tj = new TreeLoopJava();
+        List<TreeNodeJava> l = tj.getChildNodesRec(3L);
+        System.out.println(l);
+        System.out.println();
+
     }
 }

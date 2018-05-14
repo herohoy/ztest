@@ -157,6 +157,23 @@ class TreeLoop {
     childs.toList
   }
 
+
+  //失败的scala代码尝试，list类型childs参数传入递归方法时报Reassignment to val错
+//  def getChildNodesRec(id:Long): List[TreeNode] = {
+//    val pst = conn.prepareStatement(
+//      s"""
+//         select * from tree_node where parent_id=?
+//       """.stripMargin)
+//    pst.setLong(1,id)
+//    val rs = pst.executeQuery()
+//    val childs:ListBuffer[TreeNode] = ListBuffer[TreeNode]()
+//    while (rs.next()){
+//      childs append TreeNode(id = rs.getLong("id"),name = Option( rs.getString("name")),
+//        parent = Option(TreeNode(id = id)))
+//    }
+//    childs.toList
+//  }
+
   /**
     * 单层遍历
     * @return
