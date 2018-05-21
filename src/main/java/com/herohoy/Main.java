@@ -8,6 +8,7 @@ import com.herohoy.utils.tailrec.FactorialTailRecursion;
 import com.today36524.print99.PrintNineNine;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author lihui  2018/3/22 下午5:35
@@ -40,5 +41,8 @@ public class Main {
         System.out.println(l);
         System.out.println();
 
+        Optional<TreeNodeJava> tn = tj.getNodeJavaWithParents(1L);
+        System.out.println(tn);
+        System.out.println();
     }
 }
