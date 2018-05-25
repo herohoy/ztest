@@ -29,6 +29,19 @@ public class TreeLoopJava {
     private ResultSet getNodeRs(Long id){
         ResultSet result = null;
         try {
+            PreparedStatement pst = conn.prepareStatement("select * from tree_node where id=?");
+            pst.setLong(1,id);
+            result = pst.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return result;
+        }
+    }
+
+    private ResultSet getNodeRsChilds(Long id){
+        ResultSet result = null;
+        try {
             PreparedStatement pst = conn.prepareStatement("select * from tree_node where parent_id=?");
             pst.setLong(1,id);
             result = pst.executeQuery();
@@ -88,7 +101,7 @@ public class TreeLoopJava {
 
     private TailRecursion<Optional<TreeNodeJava>> getParentsTailrec(final Optional<TreeNodeJava> node){
         if(!node.isPresent()){
-            return TailInvoke.done(node);
+            return TailInvoke.done(currentNode);
         }else{
             node.get().setParent(
                 node.get().getParent().isPresent() ?
@@ -112,7 +125,7 @@ public class TreeLoopJava {
     public ArrayList<TreeNodeJava> getChildNodesRec(Long id) {
         ArrayList<TreeNodeJava> result = new ArrayList<TreeNodeJava>();
         try {
-            ResultSet rs = getNodeRs(id);
+            ResultSet rs = getNodeRsChilds(id);
             while (rs.next()){
                 result.add(new TreeNodeJava(rs.getLong("id"),Optional.of(rs.getString("name")),
                         Optional.of(new TreeNodeJava(id)),getChildNodesRec(rs.getLong("id"))));

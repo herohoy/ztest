@@ -41,7 +41,7 @@ public class Main {
         System.out.println(l);
         System.out.println();
 
-        Optional<TreeNodeJava> tn = tj.getNodeJavaWithParents(1L);
+        Optional<TreeNodeJava> tn = tj.getNodeJavaWithParents(40L);
         System.out.println(tn);
         System.out.println();
     }
