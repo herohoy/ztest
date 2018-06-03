@@ -44,5 +44,9 @@ public class Main {
         Optional<TreeNodeJava> tn = tj.getNodeJavaWithParents(40L);
         System.out.println(tn);
         System.out.println();
+
+        tn = tj.getNodeJavaWithFirstChilds(3L);
+        System.out.println(tn);
+        System.out.println();
     }
 }

@@ -97,8 +97,34 @@ public class TreeLoopJava {
         }
     }
 
+
+    /**
+     * 单层子节点查询
+     * @param id
+     * @return
+     */
+    public ArrayList<TreeNodeJava> getChildNodes(Long id) {
+        ArrayList<TreeNodeJava> result = new ArrayList<TreeNodeJava>();
+        try {
+            ResultSet rs = getNodeRsChilds(id);
+            while (rs.next()){
+                result.add(new TreeNodeJava(rs.getLong("id"),Optional.of(rs.getString("name"))));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return result;
+        }
+    }
+
+
     private Optional<TreeNodeJava> currentNode = Optional.empty();
 
+    /**
+     * 树的父节点全获取 尾递归代码
+     * @param node
+     * @return
+     */
     private TailRecursion<Optional<TreeNodeJava>> getParentsTailrec(final Optional<TreeNodeJava> node){
         if(!node.isPresent()){
             return TailInvoke.done(currentNode);
@@ -112,9 +138,45 @@ public class TreeLoopJava {
         }
     }
 
+    /**
+     * 树的父节点全获取 对外接口
+     * @param id
+     * @return
+     */
     public Optional<TreeNodeJava> getNodeJavaWithParents(Long id){
         currentNode = getNodeWithSingleParent(id);
         return getParentsTailrec(currentNode).invoke();
+    }
+
+    /**
+     * 树的首个子节点列表全获取 尾递归代码
+     * @param node
+     * @return
+     */
+    private TailRecursion<Optional<TreeNodeJava>> getFirstChildsTailrec(final Optional<TreeNodeJava> node){
+        if(!node.isPresent()){
+            return TailInvoke.done(currentNode);
+        }else{
+            node.get().setChildNodes(getChildNodes(node.get().getId()));
+            return TailInvoke.call(() -> getFirstChildsTailrec(
+                    node.get().getChildNodes().isEmpty() ?
+                            Optional.empty() :
+                            Optional.of(node.get().getChildNodes().get(0))
+            ));
+        }
+    }
+
+    /**
+     * 树的首个子节点列表全获取 对外接口
+     * @param id
+     * @return
+     */
+    public Optional<TreeNodeJava> getNodeJavaWithFirstChilds(Long id){
+        currentNode = getNode(id);
+        if(currentNode.isPresent()){
+            currentNode.get().setChildNodes(getChildNodes(id));
+        }
+        return getFirstChildsTailrec(currentNode).invoke();
     }
 
     /**
