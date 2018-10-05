@@ -1,7 +1,7 @@
 package com.today36524.roulette
 
 /**
-  * 轮盘赌算法/比例选择
+  * 轮盘赌算法/比例选择（scala代码暂时不正确，需要修复 TODO）
   */
 class RouletteWheel {
   def roulette(P:Array[Double]): Int = {

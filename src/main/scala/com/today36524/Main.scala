@@ -2,6 +2,7 @@ package com.today36524
 
 import com.herohoy.algorithms.roulette.RouletteWheelJava
 import com.today36524.divide2prime.Divide2Prime
+import com.today36524.factorial.Factorial
 import com.today36524.fibonacci.Fibonacci
 import com.today36524.gcdlcm.GcdLcm
 import com.today36524.narcissusnum.NarcissusNumber
@@ -138,6 +139,12 @@ object Main {
        """
     println(sql)
     */
+
+    val fac:Factorial = new Factorial
+    println(fac.factorial(2,2) +":"
+      + com.herohoy.algorithms.factorial.Factorial.factorial(2,2))
+
+    println()
 
     //显示treeNode以及测试递归
     val tree:TreeLoop = new TreeLoop
